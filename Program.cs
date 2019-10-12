@@ -47,7 +47,6 @@ namespace c_
 
                     List<ShipmentImport> TablicaShipmentow = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ShipmentImport>>(responseString);
 
-
                     for (int i = 0; i < TablicaShipmentow.LongCount(); i++)
                     {
                         var clkabana = new System.Net.WebClient();
