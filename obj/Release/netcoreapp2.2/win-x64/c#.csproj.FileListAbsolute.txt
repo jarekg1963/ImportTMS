@@ -1,0 +1,14 @@
+C:\programowanie\c#\bin\Release\netcoreapp2.2\win-x64\hostpolicy.dll
+C:\programowanie\c#\bin\Release\netcoreapp2.2\win-x64\hostfxr.dll
+C:\programowanie\c#\bin\Release\netcoreapp2.2\win-x64\c#.exe
+C:\programowanie\c#\bin\Release\netcoreapp2.2\win-x64\c#.deps.json
+C:\programowanie\c#\bin\Release\netcoreapp2.2\win-x64\c#.runtimeconfig.json
+C:\programowanie\c#\bin\Release\netcoreapp2.2\win-x64\c#.runtimeconfig.dev.json
+C:\programowanie\c#\bin\Release\netcoreapp2.2\win-x64\c#.dll
+C:\programowanie\c#\bin\Release\netcoreapp2.2\win-x64\c#.pdb
+C:\programowanie\c#\obj\Release\netcoreapp2.2\win-x64\c#.csprojAssemblyReference.cache
+C:\programowanie\c#\obj\Release\netcoreapp2.2\win-x64\c#.csproj.CoreCompileInputs.cache
+C:\programowanie\c#\obj\Release\netcoreapp2.2\win-x64\c#.AssemblyInfoInputs.cache
+C:\programowanie\c#\obj\Release\netcoreapp2.2\win-x64\c#.AssemblyInfo.cs
+C:\programowanie\c#\obj\Release\netcoreapp2.2\win-x64\c#.dll
+C:\programowanie\c#\obj\Release\netcoreapp2.2\win-x64\c#.pdb
