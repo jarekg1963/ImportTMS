@@ -1,35 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
-using c_;
-using Nest;
+using Microsoft.Extensions.Configuration;
+
 namespace c_
 {
     class Program
     {
 
-        static string url = "http://localhost:9200/testy/shipment/";
-
         static void Main(string[] args)
         {
 
 
+            var builder = new ConfigurationBuilder()
+                   .SetBasePath(Directory.GetCurrentDirectory())
+                   .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true).Build();
 
-            string responseString = string.Empty;
+
             using (var webClient = new WebClient())
             {
-                string tmsUrlBezDaty = "http://tpvlogistics.eu/mmd/DashBoard_1.php?date=";
+                //              
+
+
+                var url = builder["url"];
+                var tmsUrlBezDaty = builder["tmsUrlBezDaty"];
 
                 DateTime dataPoczatkowa = DateTime.Now;
-                
 
                 // DateTime dataPoczatkowa = Convert.ToDateTime("2019-01-01");
-
-                
 
                 while (dataPoczatkowa <= DateTime.Now)
 
@@ -43,7 +43,7 @@ namespace c_
                     string baseUrl = tmsUrlBezDaty + dataPoczatkowa.ToString("yyyy-MM-dd");
 
                     var clt = new System.Net.WebClient();
-                    responseString = clt.DownloadString(baseUrl);
+                    string responseString = clt.DownloadString(baseUrl);
 
                     List<ShipmentImport> TablicaShipmentow = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ShipmentImport>>(responseString);
 
@@ -62,7 +62,7 @@ namespace c_
 
                     }
                     dataPoczatkowa = dataPoczatkowa.Add(new TimeSpan(864000000000));
-                     Console.WriteLine(dataPoczatkowa);
+                    Console.WriteLine(dataPoczatkowa);
                 }
 
             }
@@ -70,49 +70,52 @@ namespace c_
 
         }
 
-
     }
 }
 
-            //  getShipmentValues();
+
+
+// --------------  proby z MSSQL -a 
+
+//  getShipmentValues();
 
 
 
-            // SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-            // builder.DataSource = "DESKTOP-M9PRPPC\\MSSQLSERVER01";   // update me
-            // builder.IntegratedSecurity = true;
+// SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+// builder.DataSource = "DESKTOP-M9PRPPC\\MSSQLSERVER01";   // update me
+// builder.IntegratedSecurity = true;
 
-            // builder.InitialCatalog = "TMS";
-            // Console.Write("Connecting to SQL Server ... ");
-            // using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
-            // {
-            //     connection.Open();
-            //     String sql = "SELECT * FROM TmsShipments;";
-            //     using (SqlCommand command = new SqlCommand(sql, connection))
-            //     {
-            //         using (SqlDataReader reader = command.ExecuteReader())
-            //         {
-            //             while (reader.Read())
-            //             {
-            //                 var item = new Dictionary<string, object>(reader.FieldCount - 1);
-            //                 for (var i = 0; i < reader.FieldCount; i++)
-            //                 {
-            //                     // item[reader.GetName(i)] = $"{ reader.GetValue(i)}".Trim();
-            //                     item[reader.GetName(i)] = reader.GetValue(i);
-            //                 }
-            //                 var json = Newtonsoft.Json.JsonConvert.SerializeObject(item);
-            //                 var cl = new System.Net.WebClient();
-            //                 System.Console.WriteLine(json);
-            //                 cl.Headers.Clear();
-            //                 cl.Headers.Add("Content-Type", "application/json");
-            //                 var url1 = url + reader.GetValue(0).ToString();
-            //                 System.Console.WriteLine(url1);
-            //                 cl.UploadData(url1, "POST", System.Text.UTF8Encoding.UTF8.GetBytes(json));
-            //             }
-            //         }
-            //     }
+// builder.InitialCatalog = "TMS";
+// Console.Write("Connecting to SQL Server ... ");
+// using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+// {
+//     connection.Open();
+//     String sql = "SELECT * FROM TmsShipments;";
+//     using (SqlCommand command = new SqlCommand(sql, connection))
+//     {
+//         using (SqlDataReader reader = command.ExecuteReader())
+//         {
+//             while (reader.Read())
+//             {
+//                 var item = new Dictionary<string, object>(reader.FieldCount - 1);
+//                 for (var i = 0; i < reader.FieldCount; i++)
+//                 {
+//                     // item[reader.GetName(i)] = $"{ reader.GetValue(i)}".Trim();
+//                     item[reader.GetName(i)] = reader.GetValue(i);
+//                 }
+//                 var json = Newtonsoft.Json.JsonConvert.SerializeObject(item);
+//                 var cl = new System.Net.WebClient();
+//                 System.Console.WriteLine(json);
+//                 cl.Headers.Clear();
+//                 cl.Headers.Add("Content-Type", "application/json");
+//                 var url1 = url + reader.GetValue(0).ToString();
+//                 System.Console.WriteLine(url1);
+//                 cl.UploadData(url1, "POST", System.Text.UTF8Encoding.UTF8.GetBytes(json));
+//             }
+//         }
+//     }
 
-            // }
+// }
 
 
 
