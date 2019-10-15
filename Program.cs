@@ -9,44 +9,21 @@ namespace c_
 {
     class Program
     {
-
         static void Main(string[] args)
         {
-
-
             var builder = new ConfigurationBuilder()
                    .SetBasePath(Directory.GetCurrentDirectory())
                    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true).Build();
-
-
-            using (var webClient = new WebClient())
-            {
-                //              
-
-
                 var url = builder["url"];
                 var tmsUrlBezDaty = builder["tmsUrlBezDaty"];
-
                 DateTime dataPoczatkowa = DateTime.Now;
-
                 // DateTime dataPoczatkowa = Convert.ToDateTime("2019-01-01");
-
                 while (dataPoczatkowa <= DateTime.Now)
-
                 {
-
-                    var cl1 = new System.Net.WebClient();
-
-                    cl1.Headers.Clear();
-                    cl1.Headers.Add("Content-Type", "application/json");
-
                     string baseUrl = tmsUrlBezDaty + dataPoczatkowa.ToString("yyyy-MM-dd");
-
-                    var clt = new System.Net.WebClient();
-                    string responseString = clt.DownloadString(baseUrl);
-
+                    var cltms = new System.Net.WebClient();
+                    string responseString = cltms.DownloadString(baseUrl);
                     List<ShipmentImport> TablicaShipmentow = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ShipmentImport>>(responseString);
-
                     for (int i = 0; i < TablicaShipmentow.LongCount(); i++)
                     {
                         var clkabana = new System.Net.WebClient();
@@ -59,15 +36,10 @@ namespace c_
                         var json = Newtonsoft.Json.JsonConvert.SerializeObject(TablicaShipmentow[i]);
                         var url1 = url + zmId;
                         clkabana.UploadData(url1, "POST", System.Text.UTF8Encoding.UTF8.GetBytes(json));
-
                     }
                     dataPoczatkowa = dataPoczatkowa.Add(new TimeSpan(864000000000));
                     Console.WriteLine(dataPoczatkowa);
                 }
-
-            }
-
-
         }
 
     }
